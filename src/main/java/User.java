@@ -9,7 +9,7 @@ public class User {
     private String lastName;
     transient String password;
     private Scanner scanner = new Scanner(System.in);
-    private ArrayList users = new ArrayList<>();
+    private ArrayList users = new ArrayList();
     private HashMap<Integer,String> passwords = new HashMap();
 
     public User(String name, String fullName, String password) {
