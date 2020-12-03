@@ -8,9 +8,10 @@ public class User {
     private String Name;
     private String lastName;
     transient String password;
+    private int scope = 0;
     private Scanner scanner = new Scanner(System.in);
     private ArrayList users = new ArrayList();
-    private HashMap<Integer,String> passwords = new HashMap();
+    private HashMap<Integer, String> passwords = new HashMap();
 
     public User(String name, String fullName, String password) {
         Name = name;
@@ -70,49 +71,86 @@ public class User {
         System.out.println("[0]:ВОЙТИ");
         System.out.println("[1]:РЕГИСТРАЦИЯ");
         users_Choose = scanner.nextInt();
-        if (users_Choose == 0){
-
-        }else {
-            addUser(users);
-        }
+//        if (users_Choose == 0) {
+//            entryToAcc();
+//        } else {
+//            addUser();
+//        }
     }
 
-    public void addUser(ArrayList base) {
-        System.out.println("Добро пожаловать в наш Банк, для регистраций напишите своё имя");
-        this.Name = scanner.nextLine();
+    public void addUser() {
+        System.out.println("Для регистраций напишите своё имя");
+        String name_users = scanner.nextLine();
         System.out.println("Напишите свою Фамилию");
-        lastName = scanner.nextLine();
+        String lastName = scanner.nextLine();
         System.out.println("Введите пароль");
-        password = scanner.nextLine();
+        String password = string_scanner();
+
         this.id++;
-        base.add(id,Name);
-        base.add(lastName);
-        passwords.put(id,password);
+        users.add(id);
+        users.add(name_users);
+        users.add(lastName);
+        passwords.put(id, password);
+        //entryToAcc();
     }
-    public void entryToAcc(){
+
+    public void entryToAcc() {
         boolean isNotSuccsesful = false;
         while (!isNotSuccsesful) {
             System.out.println("Введите сюда ваш id: ");
             int users_id = int_scanner();
-            String users_password;
-                if (passwords.containsKey(users_id)) {
-                    System.out.println("Введите Пароль");
-                    users_password = string_scanner();
-                    if (passwords.containsValue(users_password)){
-                        System.out.println("Вы успешно вошли");
-                        isNotSuccsesful = true;
-                    }
-                } else {
-                    System.out.println("Такого Пользователя не существует,попробуйте еще");
-                }
+            String users_password = null;
+            if (passwords.containsKey(users_id)) {
+                System.out.println("Введите Пароль");
+                users_password = scanner.nextLine();
+            } else {
+                System.out.println("Такого Пользователя не существует,попробуйте еще");
+            }
+            if (passwords.containsValue(users_password)){
+                    System.out.println("Вы успешно вошли");
+                    isNotSuccsesful = true;
+            }
         }
+        operationsUser();
     }
-    private int int_scanner(){
+
+    private int int_scanner() {
         return scanner.nextInt();
     }
 
-    private String string_scanner(){
+    private String string_scanner() {
         return scanner.nextLine();
+    }
+
+    public void operationsUser() {
+        System.out.println("Ваш счёт: " + scope);
+        int operation_Choose;
+        System.out.println("Что вы хотите сделать? ");
+        System.out.println("[0]:Пополнить");
+        System.out.println("[1]:Перевести");
+        operation_Choose = int_scanner();
+        if (operation_Choose == 0) {
+            System.out.println("Сколько тенге вы хотите пополнить ваш счёт?");
+            int scope_users = int_scanner();
+            this.scope = scope_users + scope;
+        } else if (operation_Choose == 0) {
+            System.out.println("Кому вы хотите перевести деньги? ");
+            int i = 0;
+            for (i = 0; i < users.size(); i++) {
+                System.out.println((i + 1) + " " + users.get(i));
+            }
+            int choose_translate = int_scanner();
+            if (choose_translate == i) {
+                System.out.println("Сколько вы хотите скинуть деньги?:" + users.get(i));
+                int translate_scope = int_scanner();
+                if (translate_scope > scope) {
+                    System.out.println("У Вас недостачно средств");
+                } else {
+                    System.out.println("Вы перевели" + translate_scope + "этому" + users.get(i));
+                    scope = scope - translate_scope;
+                }
+            }
+        }
     }
 
 }
