@@ -6,11 +6,10 @@ import java.util.LinkedList;
 public class Main {
     public static void main(String args[]) {
         ArrayList<User> list = new ArrayList();
+
         User Danial = new User();
-       // Danial.welcomeToTheBank();
-        Danial.addUser();
-        Danial.entryToAcc();
         Danial.operationsUser();
+
 
     }
 }
