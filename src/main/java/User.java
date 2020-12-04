@@ -95,24 +95,28 @@ public class User {
     }
 
     public void entryToAcc() {
-        boolean isNotSuccsesful = false;
-        while (!isNotSuccsesful) {
+        boolean isNotSuccessful = false;
+        do {
             System.out.println("Введите сюда ваш id: ");
-            int users_id = int_scanner();
             String users_password = null;
+            int users_id = scanner.nextInt();
+            scanner.nextLine();
             if (passwords.containsKey(users_id)) {
                 System.out.println("Введите Пароль");
                 users_password = scanner.nextLine();
-            } else {
-                System.out.println("Такого Пользователя не существует,попробуйте еще");
-            }
-            if (passwords.containsValue(users_password)){
+                if (passwords.containsValue(users_password)) {
                     System.out.println("Вы успешно вошли");
-                    isNotSuccsesful = true;
+                    isNotSuccessful = true;
+                        operationsUser();
+                }
+            }else {
+                    System.out.println("Такого Пользователя не существует,попробуйте еще");
+                }
+
             }
+            while (isNotSuccessful) ;
+
         }
-        operationsUser();
-    }
 
     private int int_scanner() {
         return scanner.nextInt();
